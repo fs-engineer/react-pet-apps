@@ -7,14 +7,31 @@ import { FilterByName } from "./FilterByName";
 import { SearchForm } from "./SearchForm";
 import { Section } from "../Section";
 import { Title } from "./Title";
-import { CONTACTS_DATA } from "../../assets/contactsData";
-import { TOP_RIGHT } from "../../constants";
+// import { contacts_data } from "../../assets/contactsData";
+import { CONTACTS_DATA, TOP_RIGHT } from "../../constants";
+import storage from "../../helpers/storage";
 
 class Phonebook extends Component {
   state = {
-    contacts: CONTACTS_DATA,
+    contacts: [],
     filter: "",
   };
+
+  componentDidMount() {
+    // storage.save(CONTACTS_DATA, contacts_data);
+    const contacts = storage.get(CONTACTS_DATA);
+
+    this.setState({ contacts });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts: prevContacts } = prevState;
+    const { contacts: currentContacts } = this.state;
+
+    if (prevContacts !== currentContacts) {
+      storage.save(CONTACTS_DATA, currentContacts);
+    }
+  }
 
   addContact = (e) => {
     e.preventDefault();
