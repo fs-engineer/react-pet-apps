@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { StyledBtn } from './Button.styled';
+import React, { Component } from "react";
+import { StyledBtn } from "./Button.styled";
 
 class Button extends Component {
   render() {

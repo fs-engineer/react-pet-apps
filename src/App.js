@@ -1,9 +1,11 @@
-import { Phonebook } from "./components/Phonebook";
+import { ImageFinder } from "./components/ImageFinder";
+// import { Phonebook } from "./components/Phonebook";
 
 function App() {
   return (
     <div className="App">
-      <Phonebook />
+      {/* <Phonebook /> */}
+      <ImageFinder />
     </div>
   );
 }
