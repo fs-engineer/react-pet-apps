@@ -19,11 +19,18 @@ export default class ImageGallery extends Component {
   async componentDidUpdate(prevProps, _) {
     const { searchQuery: prevSearchQuery } = prevProps;
     const { searchQuery: currentSearchQuery } = this.props;
+    const { currentPage, galleryMeta } = this.state;
+
+    if (currentPage === galleryMeta.totalPages) {
+      toast.info("It's the last page");
+    }
 
     if (
       prevSearchQuery !== currentSearchQuery &&
       currentSearchQuery.trim() !== ""
     ) {
+      this.resetGalleryState();
+
       const { currentPage } = this.state;
       const { toggleSpinner } = this.props;
 
@@ -58,7 +65,7 @@ export default class ImageGallery extends Component {
         },
       }));
 
-      if (totalHits.length > 1) {
+      if (totalHits > PER_PAGE) {
         this.setState(({ currentPage }) => ({ currentPage: currentPage + 1 }));
       }
 
@@ -77,16 +84,30 @@ export default class ImageGallery extends Component {
   };
 
   handleClickMoreButton = () => {
-    const { currentSearchQuery, currentPage } = this.state;
-    const { toggleSpinner } = this.props;
+    const { currentPage } = this.state;
+    const { toggleSpinner, searchQuery: currentSearchQuery } = this.props;
 
     this.getGalleryData({ currentSearchQuery, toggleSpinner, currentPage });
+  };
+
+  resetGalleryState = () => {
+    this.setState({
+      gallery: [],
+      galleryMeta: { totalImages: null, totalPages: null },
+      imgData: "",
+      currentPage: 1,
+    });
   };
 
   render() {
     const { gallery, isModalOpen, imgData, galleryMeta, currentPage } =
       this.state;
+
     const imgOnLastPage = galleryMeta.totalImages % PER_PAGE;
+    const loadingBtnText =
+      currentPage !== galleryMeta.totalPages
+        ? `load next ${PER_PAGE} images`
+        : `load last ${imgOnLastPage}`;
 
     return (
       <>
@@ -95,23 +116,19 @@ export default class ImageGallery extends Component {
             ? gallery.map(({ id, largeImageURL, webformatURL, tags }) => (
                 <ImageGalleryItem
                   toggleModal={() => this.toggleModal({ largeImageURL, tags })}
-                  key={id}
+                  key={id + tags}
                   id={id}
                   webformatURL={webformatURL}
                 />
               ))
             : null}
         </Gallery>
-        {gallery.length ? (
+        {gallery.length && currentPage !== galleryMeta.totalPages ? (
           <BtnContainer>
             <Button
               onClick={this.handleClickMoreButton}
               textColor="blue"
-              text={
-                currentPage !== galleryMeta.totalPages
-                  ? `load next ${PER_PAGE} images`
-                  : `load last ${imgOnLastPage}`
-              }
+              text={loadingBtnText}
             />
           </BtnContainer>
         ) : null}
