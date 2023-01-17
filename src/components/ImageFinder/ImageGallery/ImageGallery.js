@@ -38,13 +38,19 @@ export default class ImageGallery extends Component {
 
   render() {
     const { gallery } = this.state;
-    console.log("gallery: ", gallery);
 
     return (
       <>
         <Gallery>
           {gallery.length
-            ? gallery.map((el) => <ImageGalleryItem key={el.id} item={el} />)
+            ? gallery.map(({ id, largeImageURL, webformatURL }) => (
+                <ImageGalleryItem
+                  key={id}
+                  id={id}
+                  largeImageURL={largeImageURL}
+                  webformatURL={webformatURL}
+                />
+              ))
             : null}
         </Gallery>
       </>
