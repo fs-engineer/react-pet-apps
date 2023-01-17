@@ -15,18 +15,21 @@ export default class ImageGallery extends Component {
 
   async componentDidUpdate(prevProps, _) {
     const { searchQuery: prevSearchQuery } = prevProps;
-    const { searchQuery: currentSearchQuery } = this.props;
+    const { searchQuery: currentSearchQuery, toggleSpinner } = this.props;
 
     try {
       if (
         prevSearchQuery !== currentSearchQuery &&
         currentSearchQuery.trim() !== ""
       ) {
+        toggleSpinner();
+
         const { hits: data, totalHits: totalImages } =
           await pixabayApi.getImages(currentSearchQuery);
 
         if (!data || !data.length) {
           toast.warn("No images found for your request");
+          toggleSpinner();
           return;
         }
 
@@ -34,9 +37,11 @@ export default class ImageGallery extends Component {
           gallery: data,
           totalImages,
         });
+        toggleSpinner();
       }
     } catch (error) {
       toast.warn("Ups....something wrong!!!");
+      toggleSpinner();
     }
   }
 
