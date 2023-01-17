@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import * as pixabayApi from "../../../helpers/imageApi";
+import { Modal } from "../../Modal";
 import { ImageGalleryItem } from "../ImageGalleryItem";
 import { Gallery } from "./ImageGallery.styled";
 
@@ -9,9 +9,11 @@ export default class ImageGallery extends Component {
   state = {
     gallery: [],
     totalImages: null,
+    isModalOpen: false,
+    imgData: "",
   };
 
-  async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, _) {
     const { searchQuery: prevSearchQuery } = prevProps;
     const { searchQuery: currentSearchQuery } = this.props;
 
@@ -33,26 +35,41 @@ export default class ImageGallery extends Component {
           totalImages,
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.warn("Ups....something wrong!!!");
+    }
   }
 
+  toggleModal = (imgData) => {
+    this.setState(({ isModalOpen }) => ({
+      isModalOpen: !isModalOpen,
+      imgData: imgData || {},
+    }));
+  };
+
   render() {
-    const { gallery } = this.state;
+    const { gallery, isModalOpen, imgData } = this.state;
 
     return (
       <>
         <Gallery>
           {gallery.length
-            ? gallery.map(({ id, largeImageURL, webformatURL }) => (
+            ? gallery.map(({ id, largeImageURL, webformatURL, tags }) => (
                 <ImageGalleryItem
+                  toggleModal={() => this.toggleModal({ largeImageURL, tags })}
                   key={id}
                   id={id}
-                  largeImageURL={largeImageURL}
                   webformatURL={webformatURL}
                 />
               ))
             : null}
         </Gallery>
+
+        {isModalOpen && (
+          <Modal toggleModal={this.toggleModal}>
+            <img src={imgData.largeImageURL} alt={imgData.tags} />
+          </Modal>
+        )}
       </>
     );
   }

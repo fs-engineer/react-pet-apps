@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { ContactsList } from "./ContactsList";
 import { FilterByName } from "./FilterByName";
 import { SearchForm } from "./SearchForm";
