@@ -1,5 +1,5 @@
 import { Component } from "react";
-import Button from "../../Buttons/Button";
+import { Button } from "../../Buttons/Button";
 import { List, ListItem, ItemText } from "./ContactsList.styled";
 
 export default class ContactsList extends Component {

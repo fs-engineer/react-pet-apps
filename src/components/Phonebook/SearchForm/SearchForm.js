@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, NameInput, PhoneInput } from "./SearchForm.styled";
-import Button from "../../Buttons/Button";
+import { Button } from "../../Buttons/Button";
 
 export default class SearchForm extends Component {
   state = {

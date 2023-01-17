@@ -1,4 +1,7 @@
 import { ImageFinder } from "./components/ImageFinder";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { TOP_RIGHT } from "./constants";
 // import { Phonebook } from "./components/Phonebook";
 
 function App() {
@@ -6,6 +9,7 @@ function App() {
     <div className="App">
       {/* <Phonebook /> */}
       <ImageFinder />
+      <ToastContainer position={TOP_RIGHT} />
     </div>
   );
 }

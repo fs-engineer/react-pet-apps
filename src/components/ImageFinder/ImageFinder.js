@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import { SearchBar } from "./SearchBar";
-import * as pixabayApi from "../../helpers/imageApi";
 import { Container } from "./ImageFinder.styled";
+import { ImageGallery } from "./ImageGallery";
 
 export default class ImageFinder extends Component {
+  state = {
+    searchQuery: "",
+  };
+
+  getSearchQuery = (query) => {
+    this.setState({ searchQuery: query });
+  };
+
   render() {
-    pixabayApi.getImages("rust", 1).then((res) => console.log("res", res));
+    const { searchQuery } = this.state;
+
     return (
       <Container>
-        <SearchBar />
+        <SearchBar onChangeQuery={this.getSearchQuery} />
+        <ImageGallery searchQuery={searchQuery} />
       </Container>
     );
   }

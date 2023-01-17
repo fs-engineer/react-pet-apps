@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { nanoid } from "nanoid";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ContactsList } from "./ContactsList";
 import { FilterByName } from "./FilterByName";
@@ -8,7 +8,7 @@ import { SearchForm } from "./SearchForm";
 import { Section } from "../Section";
 import { Title } from "./Title";
 // import { contacts_data } from "../../assets/contactsData";
-import { CONTACTS_DATA, TOP_RIGHT } from "../../constants";
+import { CONTACTS_DATA } from "../../constants";
 import storage from "../../helpers/storage";
 
 class Phonebook extends Component {
@@ -94,7 +94,6 @@ class Phonebook extends Component {
             deleteContact={this.deleteContact}
           />
         </Section>
-        <ToastContainer position={TOP_RIGHT} />
       </>
     );
   }
