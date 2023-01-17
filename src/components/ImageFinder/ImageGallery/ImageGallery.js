@@ -1,49 +1,73 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
+import { PER_PAGE } from "../../../constants";
 import * as pixabayApi from "../../../helpers/imageApi";
+import Button from "../../Buttons/Button/Button";
 import { Modal } from "../../Modal";
 import { ImageGalleryItem } from "../ImageGalleryItem";
-import { Gallery } from "./ImageGallery.styled";
+import { BtnContainer, Gallery } from "./ImageGallery.styled";
 
 export default class ImageGallery extends Component {
   state = {
     gallery: [],
-    totalImages: null,
+    galleryMeta: { totalImages: null, totalPages: null },
     isModalOpen: false,
     imgData: "",
+    currentPage: 1,
   };
 
   async componentDidUpdate(prevProps, _) {
     const { searchQuery: prevSearchQuery } = prevProps;
-    const { searchQuery: currentSearchQuery, toggleSpinner } = this.props;
+    const { searchQuery: currentSearchQuery } = this.props;
 
+    if (
+      prevSearchQuery !== currentSearchQuery &&
+      currentSearchQuery.trim() !== ""
+    ) {
+      const { currentPage } = this.state;
+      const { toggleSpinner } = this.props;
+
+      this.getGalleryData({ currentSearchQuery, toggleSpinner, currentPage });
+    }
+  }
+
+  getGalleryData = async ({
+    currentSearchQuery,
+    toggleSpinner,
+    currentPage,
+  }) => {
     try {
-      if (
-        prevSearchQuery !== currentSearchQuery &&
-        currentSearchQuery.trim() !== ""
-      ) {
+      toggleSpinner();
+
+      const { hits: data, totalHits } = await pixabayApi.getImages(
+        currentSearchQuery,
+        currentPage
+      );
+
+      if (!data || !data.length) {
+        toast.warn("No images found for your request");
         toggleSpinner();
-
-        const { hits: data, totalHits: totalImages } =
-          await pixabayApi.getImages(currentSearchQuery);
-
-        if (!data || !data.length) {
-          toast.warn("No images found for your request");
-          toggleSpinner();
-          return;
-        }
-
-        this.setState({
-          gallery: data,
-          totalImages,
-        });
-        toggleSpinner();
+        return;
       }
+
+      this.setState((prevState) => ({
+        gallery: [...prevState.gallery, ...data],
+        galleryMeta: {
+          totalImages: totalHits,
+          totalPages: Math.ceil(totalHits / PER_PAGE),
+        },
+      }));
+
+      if (totalHits.length > 1) {
+        this.setState(({ currentPage }) => ({ currentPage: currentPage + 1 }));
+      }
+
+      toggleSpinner();
     } catch (error) {
       toast.warn("Ups....something wrong!!!");
       toggleSpinner();
     }
-  }
+  };
 
   toggleModal = (imgData) => {
     this.setState(({ isModalOpen }) => ({
@@ -52,8 +76,17 @@ export default class ImageGallery extends Component {
     }));
   };
 
+  handleClickMoreButton = () => {
+    const { currentSearchQuery, currentPage } = this.state;
+    const { toggleSpinner } = this.props;
+
+    this.getGalleryData({ currentSearchQuery, toggleSpinner, currentPage });
+  };
+
   render() {
-    const { gallery, isModalOpen, imgData } = this.state;
+    const { gallery, isModalOpen, imgData, galleryMeta, currentPage } =
+      this.state;
+    const imgOnLastPage = galleryMeta.totalImages % PER_PAGE;
 
     return (
       <>
@@ -69,7 +102,19 @@ export default class ImageGallery extends Component {
               ))
             : null}
         </Gallery>
-
+        {gallery.length ? (
+          <BtnContainer>
+            <Button
+              onClick={this.handleClickMoreButton}
+              textColor="blue"
+              text={
+                currentPage !== galleryMeta.totalPages
+                  ? `load next ${PER_PAGE} images`
+                  : `load last ${imgOnLastPage}`
+              }
+            />
+          </BtnContainer>
+        ) : null}
         {isModalOpen && (
           <Modal toggleModal={this.toggleModal}>
             <img src={imgData.largeImageURL} alt={imgData.tags} />

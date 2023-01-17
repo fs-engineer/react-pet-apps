@@ -3,10 +3,10 @@ import { StyledBtn } from "./Button.styled";
 
 class Button extends Component {
   render() {
-    const { text, type, onClick, id } = this.props;
+    const { text, textColor = "#000", type, onClick, id } = this.props;
 
     return (
-      <StyledBtn type={type} onClick={onClick} data-id={id}>
+      <StyledBtn color={textColor} type={type} onClick={onClick} data-id={id}>
         {text}
       </StyledBtn>
     );

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { HORIZONTAL, PER_PAGE, PHOTO } from "../constants";
 const api_key = process.env.REACT_APP_PIXABAY_API_KEY;
 const pixabay_url = process.env.REACT_APP_PIXABAY_URL;
 
@@ -7,10 +8,10 @@ export const getImages = async (query, page) => {
     params: {
       key: api_key,
       q: query,
-      image_type: "photo",
-      orientation: "horizontal",
+      image_type: PHOTO,
+      orientation: HORIZONTAL,
       safesearch: true,
-      per_page: 12,
+      per_page: PER_PAGE,
       page,
     },
   };
