@@ -16,8 +16,9 @@ export default class ImageGallery extends Component {
     currentPage: 1,
   };
 
-  componentDidUpdate(prevProps, _) {
+  componentDidUpdate(prevProps, prevState) {
     const { searchQuery: prevSearchQuery } = prevProps;
+    const { currentPage: prevPage } = prevState;
     const { searchQuery: currentSearchQuery } = this.props;
     const { currentPage, galleryMeta } = this.state;
 
@@ -26,8 +27,9 @@ export default class ImageGallery extends Component {
     }
 
     if (
-      prevSearchQuery !== currentSearchQuery &&
-      currentSearchQuery.trim() !== ""
+      (prevSearchQuery !== currentSearchQuery &&
+        currentSearchQuery.trim() !== "") ||
+      currentPage !== prevPage
     ) {
       this.resetGalleryState();
 
@@ -65,10 +67,6 @@ export default class ImageGallery extends Component {
         },
       }));
 
-      if (totalHits > PER_PAGE) {
-        this.setState(({ currentPage }) => ({ currentPage: currentPage + 1 }));
-      }
-
       toggleSpinner();
     } catch (error) {
       toast.warn("Ups....something wrong!!!");
@@ -84,10 +82,7 @@ export default class ImageGallery extends Component {
   };
 
   handleClickMoreButton = () => {
-    const { currentPage } = this.state;
-    const { toggleSpinner, searchQuery: currentSearchQuery } = this.props;
-
-    this.getGalleryData({ currentSearchQuery, toggleSpinner, currentPage });
+    this.setState(({ currentPage }) => ({ currentPage: currentPage + 1 }));
   };
 
   resetGalleryState = () => {
