@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import { createPortal } from "react-dom";
 import { ESCAPE, KEYDOWN, OVERLAY } from "../../constants";
 import { Overlay, Paper } from "./Modal.styled";
+
+const modalRoot = document.querySelector("#modal-root");
 
 export default class Modal extends Component {
   componentDidMount() {
@@ -19,9 +22,7 @@ export default class Modal extends Component {
   };
 
   handleClickOverlay = (e) => {
-    const { name } = e.target.dataset;
-
-    if (name !== OVERLAY) return;
+    if (e.target !== e.currentTarget) return;
 
     const { toggleModal } = this.props;
     toggleModal();
@@ -30,10 +31,11 @@ export default class Modal extends Component {
   render() {
     const { children } = this.props;
 
-    return (
+    return createPortal(
       <Overlay data-name={OVERLAY} onClick={this.handleClickOverlay}>
         <Paper>{children && children}</Paper>
-      </Overlay>
+      </Overlay>,
+      modalRoot
     );
   }
 }

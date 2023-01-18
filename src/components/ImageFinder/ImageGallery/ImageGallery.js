@@ -16,7 +16,7 @@ export default class ImageGallery extends Component {
     currentPage: 1,
   };
 
-  async componentDidUpdate(prevProps, _) {
+  componentDidUpdate(prevProps, _) {
     const { searchQuery: prevSearchQuery } = prevProps;
     const { searchQuery: currentSearchQuery } = this.props;
     const { currentPage, galleryMeta } = this.state;
