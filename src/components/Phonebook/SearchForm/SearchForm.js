@@ -12,12 +12,25 @@ export default class SearchForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  render() {
-    const { name, number } = this.state;
+  handleFormSubmit = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const number = e.target.number.value;
     const { addContact } = this.props;
 
+    addContact({ name, number });
+
+    this.setState({
+      name: "",
+      number: "",
+    });
+  };
+
+  render() {
+    const { name, number } = this.state;
+
     return (
-      <Form onSubmit={addContact}>
+      <Form onSubmit={this.handleFormSubmit}>
         <NameInput
           type="text"
           name="name"

@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-import { Filter } from './FilterByName.styled';
+import React from "react";
+import { Filter } from "./FilterByName.styled";
 
-export default class FilterByName extends Component {
-  render() {
-    const { filter, onChange } = this.props;
+const FilterByName = ({ filter, onChange }) => (
+  <Filter onChange={onChange} type="text" name="filter" value={filter} />
+);
 
-    return (
-      <Filter onChange={onChange} type="text" name="filter" value={filter} />
-    );
-  }
-}
+export default FilterByName;
