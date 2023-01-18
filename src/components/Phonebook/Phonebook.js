@@ -34,7 +34,7 @@ const Phonebook = () => {
       id: nanoid(),
     };
 
-    setContacts([newContact, ...contacts]);
+    setContacts((prevContacts) => [newContact, ...prevContacts]);
 
     toast.info(`Contact ${name} added`);
   };
@@ -42,10 +42,6 @@ const Phonebook = () => {
   const deleteContact = (id) => {
     const updatedContacts = contacts.filter((contact) => contact.id !== id);
     setContacts(updatedContacts);
-  };
-
-  const getFilter = (e) => {
-    setFilter(e.target.value);
   };
 
   const filterByName = () => {
@@ -61,7 +57,7 @@ const Phonebook = () => {
       <Section title="Phonebook">
         <SearchForm addContact={addContact} />
         <Title title="Contacts" />
-        <FilterByName onChange={getFilter} filter={filter} />
+        <FilterByName onChange={setFilter} filter={filter} />
         <ContactsList
           filteredContactsByName={filteredContactsByName}
           deleteContact={deleteContact}

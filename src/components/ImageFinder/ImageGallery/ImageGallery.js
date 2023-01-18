@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { PER_PAGE } from "../../../constants";
 import * as pixabayApi from "../../../helpers/imageApi";
@@ -7,49 +7,50 @@ import { Modal } from "../../Modal";
 import { ImageGalleryItem } from "../ImageGalleryItem";
 import { BtnContainer, Gallery } from "./ImageGallery.styled";
 
-export default class ImageGallery extends Component {
-  state = {
-    gallery: [],
-    galleryMeta: { totalImages: null, totalPages: null },
-    isModalOpen: false,
-    imgData: "",
-    currentPage: 1,
-  };
+const ImageGallery = ({ searchQuery, toggleSpinner }) => {
+  const [gallery, setGallery] = useState([]);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  console.log("currentPage: ", currentPage);
+  const [imgData, setImgData] = useState("");
+  const [totalImages, setTotalImages] = useState(null);
+  const [totalPages, setTotalPages] = useState(null);
 
-  componentDidUpdate(prevProps, prevState) {
-    const { searchQuery: prevSearchQuery } = prevProps;
-    const { currentPage: prevPage } = prevState;
-    const { searchQuery: currentSearchQuery } = this.props;
-    const { currentPage, galleryMeta } = this.state;
+  const imgOnLastPage = totalImages % PER_PAGE;
+  const loadingBtnText =
+    currentPage !== totalPages
+      ? `load next ${PER_PAGE} images`
+      : `load last ${imgOnLastPage}`;
 
-    if (currentPage === galleryMeta.totalPages) {
+  useEffect(() => {
+    if (currentPage === totalPages) {
       toast.info("It's the last page");
     }
+  }, [currentPage, totalPages]);
 
-    if (
-      (prevSearchQuery !== currentSearchQuery &&
-        currentSearchQuery.trim() !== "") ||
-      currentPage !== prevPage
-    ) {
-      this.resetGalleryState();
+  // useEffect(() => {
+  //   resetGalleryState(searchQuery);
+  // }, [searchQuery]);
 
-      const { currentPage } = this.state;
-      const { toggleSpinner } = this.props;
+  const toggleModal = (imgData) => {
+    setIsOpenModal(!isOpenModal);
+    setImgData(imgData || {});
+  };
 
-      this.getGalleryData({ currentSearchQuery, toggleSpinner, currentPage });
-    }
-  }
+  const resetGalleryState = () => {
+    setGallery([]);
+    setTotalImages(null);
+    setTotalPages(null);
+    setImgData("");
+    setCurrentPage(1);
+  };
 
-  getGalleryData = async ({
-    currentSearchQuery,
-    toggleSpinner,
-    currentPage,
-  }) => {
+  const fetchImages = async (searchQuery, currentPage) => {
     try {
       toggleSpinner();
 
       const { hits: data, totalHits } = await pixabayApi.getImages(
-        currentSearchQuery,
+        searchQuery,
         currentPage
       );
 
@@ -59,13 +60,9 @@ export default class ImageGallery extends Component {
         return;
       }
 
-      this.setState((prevState) => ({
-        gallery: [...prevState.gallery, ...data],
-        galleryMeta: {
-          totalImages: totalHits,
-          totalPages: Math.ceil(totalHits / PER_PAGE),
-        },
-      }));
+      setGallery([...gallery, ...data]);
+      setTotalImages(totalHits);
+      setTotalPages(Math.ceil(totalHits / PER_PAGE));
 
       toggleSpinner();
     } catch (error) {
@@ -74,65 +71,43 @@ export default class ImageGallery extends Component {
     }
   };
 
-  toggleModal = (imgData) => {
-    this.setState(({ isModalOpen }) => ({
-      isModalOpen: !isModalOpen,
-      imgData: imgData || {},
-    }));
-  };
+  return (
+    <>
+      <Gallery>
+        {gallery.length
+          ? gallery.map(({ id, largeImageURL, webformatURL, tags }) => (
+              <ImageGalleryItem
+                toggleModal={() => this.toggleModal({ largeImageURL, tags })}
+                key={id + tags}
+                id={id}
+                webformatURL={webformatURL}
+              />
+            ))
+          : null}
+      </Gallery>
+      <BtnContainer>
+        <Button
+          onClick={() => setCurrentPage((prevState) => prevState + 1)}
+          textColor="blue"
+          text={loadingBtnText}
+        />
+      </BtnContainer>
+      {gallery.length && currentPage !== totalPages ? (
+        <BtnContainer>
+          <Button
+            onClick={() => setCurrentPage((prevState) => prevState + 1)}
+            textColor="blue"
+            text={loadingBtnText}
+          />
+        </BtnContainer>
+      ) : null}
+      {isOpenModal && (
+        <Modal toggleModal={toggleModal}>
+          <img src={imgData.largeImageURL} alt={imgData.tags} />
+        </Modal>
+      )}
+    </>
+  );
+};
 
-  handleClickMoreButton = () => {
-    this.setState(({ currentPage }) => ({ currentPage: currentPage + 1 }));
-  };
-
-  resetGalleryState = () => {
-    this.setState({
-      gallery: [],
-      galleryMeta: { totalImages: null, totalPages: null },
-      imgData: "",
-      currentPage: 1,
-    });
-  };
-
-  render() {
-    const { gallery, isModalOpen, imgData, galleryMeta, currentPage } =
-      this.state;
-
-    const imgOnLastPage = galleryMeta.totalImages % PER_PAGE;
-    const loadingBtnText =
-      currentPage !== galleryMeta.totalPages
-        ? `load next ${PER_PAGE} images`
-        : `load last ${imgOnLastPage}`;
-
-    return (
-      <>
-        <Gallery>
-          {gallery.length
-            ? gallery.map(({ id, largeImageURL, webformatURL, tags }) => (
-                <ImageGalleryItem
-                  toggleModal={() => this.toggleModal({ largeImageURL, tags })}
-                  key={id + tags}
-                  id={id}
-                  webformatURL={webformatURL}
-                />
-              ))
-            : null}
-        </Gallery>
-        {gallery.length && currentPage !== galleryMeta.totalPages ? (
-          <BtnContainer>
-            <Button
-              onClick={this.handleClickMoreButton}
-              textColor="blue"
-              text={loadingBtnText}
-            />
-          </BtnContainer>
-        ) : null}
-        {isModalOpen && (
-          <Modal toggleModal={this.toggleModal}>
-            <img src={imgData.largeImageURL} alt={imgData.tags} />
-          </Modal>
-        )}
-      </>
-    );
-  }
-}
+export default ImageGallery;
