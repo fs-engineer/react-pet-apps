@@ -2,7 +2,7 @@ import { useRef } from "react";
 
 const Player = ({ source }) => {
   const playerRef = useRef();
-  console.log("playerRef: ", playerRef);
+
   const play = () => playerRef.current.play();
   const pause = () => playerRef.current.pause();
 
