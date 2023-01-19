@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
 import { ContactsList } from "./ContactsList";
@@ -44,13 +44,9 @@ const Phonebook = () => {
     setContacts(updatedContacts);
   };
 
-  const filterByName = () => {
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
-
-  const filteredContactsByName = filterByName();
+  const filteredContactsByName = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <>
