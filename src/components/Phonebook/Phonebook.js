@@ -11,7 +11,7 @@ import { CONTACTS_DATA } from "../../constants";
 import storage from "../../helpers/storage";
 
 const Phonebook = () => {
-  const [contacts, setContacts] = useState(storage.get(CONTACTS_DATA));
+  const [contacts, setContacts] = useState(storage.get(CONTACTS_DATA) || []);
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
