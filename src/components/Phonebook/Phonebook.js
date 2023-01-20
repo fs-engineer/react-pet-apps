@@ -54,7 +54,6 @@ const Phonebook = () => {
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  console.log("filteredContactsByName: ", filteredContactsByName);
   return (
     <>
       <Section title="Phonebook">
