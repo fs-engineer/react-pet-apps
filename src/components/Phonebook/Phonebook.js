@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
 import { ContactsList } from "./ContactsList";
