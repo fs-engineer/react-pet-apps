@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
 import { ContactsList } from "./ContactsList";
@@ -12,7 +13,8 @@ import storage from "../../helpers/storage";
 
 const Phonebook = () => {
   const [contacts, setContacts] = useState(storage.get(CONTACTS_DATA) || []);
-  const [filter, setFilter] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filter = searchParams.get("filter") || "";
 
   useEffect(() => {
     storage.save(CONTACTS_DATA, contacts);
@@ -44,16 +46,21 @@ const Phonebook = () => {
     setContacts(updatedContacts);
   };
 
+  const changeFilter = (value) => {
+    setSearchParams(value !== "" ? { filter: value } : {});
+  };
+
   const filteredContactsByName = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
+  console.log("filteredContactsByName: ", filteredContactsByName);
   return (
     <>
       <Section title="Phonebook">
         <SearchForm addContact={addContact} />
         <Title title="Contacts" />
-        <FilterByName onChange={setFilter} filter={filter} />
+        <FilterByName onChange={changeFilter} filter={filter} />
         <ContactsList
           filteredContactsByName={filteredContactsByName}
           deleteContact={deleteContact}

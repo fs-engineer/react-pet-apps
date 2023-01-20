@@ -9,6 +9,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        {/* <Route index element={<Phonebook />} /> */}
         <Route path="/finder" element={<ImageFinder />} />
         <Route path="/phonebook" element={<Phonebook />} />
         <Route path="/videoplayer" element={<VideoPlayer />} />
