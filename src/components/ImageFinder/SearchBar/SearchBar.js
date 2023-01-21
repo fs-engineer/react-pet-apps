@@ -1,24 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import IconButton from "../../Buttons/IconButton/IconButton";
 import { SiIconfinder } from "react-icons/si";
 
 import { Header, SearchForm, SearchInput } from "./SearchBar.styled";
+import { useSearchParams } from "react-router-dom";
 
 const SearchBar = ({ onChangeQuery }) => {
-  const [query, setQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
   const handleChangeSearchInput = (e) => {
-    setQuery(e.target.value);
+    const query = e.target.value;
+    setSearchParams(query !== "" ? { query } : {});
   };
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
 
-    const {
-      searchQuery: { value },
-    } = e.target.elements;
-
-    onChangeQuery(value);
+    onChangeQuery(query);
   };
 
   return (

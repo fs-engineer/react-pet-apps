@@ -44,7 +44,7 @@ const ImageGallery = ({
       {gallery.length && currentPage !== totalPages ? (
         <BtnContainer>
           <Button
-            onClick={() => onChangePage((prevState) => prevState + 1)}
+            onClick={onChangePage}
             textColor="blue"
             text={loadingBtnText}
           />

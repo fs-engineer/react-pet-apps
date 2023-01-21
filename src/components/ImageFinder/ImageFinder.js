@@ -6,14 +6,17 @@ import { Container } from "./ImageFinder.styled";
 import { ImageGallery } from "./ImageGallery";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { PER_PAGE } from "../../constants";
+import { useSearchParams } from "react-router-dom";
 
 const ImageFinder = () => {
   const [gallery, setGallery] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalImages, setTotalImages] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams({ currentPage: 1 });
+  const query = searchParams.get("query");
+  const currentPage = searchParams.get("currentPage");
 
   useEffect(() => {
     if (currentPage === totalPages) {
@@ -56,12 +59,16 @@ const ImageFinder = () => {
     setTotalPages(null);
   };
 
+  const changeCurrentPage = () => {
+    setSearchParams({ currentPage: Number(currentPage) + 1, query });
+  };
+
   return (
     <Container>
       <SearchBar onChangeQuery={handleChangeQuery} />
       <ImageGallery
         currentPage={currentPage}
-        onChangePage={setCurrentPage}
+        onChangePage={changeCurrentPage}
         totalPages={totalPages}
         totalImg={totalImages}
         gallery={gallery}
