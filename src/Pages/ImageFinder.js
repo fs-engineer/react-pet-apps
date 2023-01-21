@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import * as pixabayApi from "../../helpers/imageApi";
-import { SearchBar } from "./SearchBar";
+import * as pixabayApi from "../helpers/imageApi";
+import { SearchBar } from "../components/ImageFinder/SearchBar";
 import { Container } from "./ImageFinder.styled";
-import { ImageGallery } from "./ImageGallery";
-import { LoadingSpinner } from "../LoadingSpinner";
-import { PER_PAGE } from "../../constants";
+import { ImageGallery } from "../components/ImageFinder/ImageGallery";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import { PER_PAGE } from "../constants";
 import { useSearchParams } from "react-router-dom";
 
 const ImageFinder = () => {

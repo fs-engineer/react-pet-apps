@@ -21,5 +21,7 @@ export const getImages = async (query, page) => {
     const { data } = imagesData;
 
     return data;
-  } catch (error) {}
+  } catch (error) {
+    return error;
+  }
 };

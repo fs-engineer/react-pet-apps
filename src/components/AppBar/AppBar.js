@@ -3,6 +3,7 @@ import { Menu, MenuItem } from "./AppBar.styled";
 
 const menu = [
   { href: "finder", text: "Image Finder" },
+  { href: "movies-collection", text: "Movies collection" },
   { href: "phonebook", text: "Phone Book" },
   { href: "videoplayer", text: "Video Player" },
 ];

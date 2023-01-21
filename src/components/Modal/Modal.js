@@ -7,18 +7,18 @@ const modalRoot = document.querySelector("#modal-root");
 
 const Modal = ({ children, toggleModal }) => {
   useEffect(() => {
+    function handleClose(e) {
+      if (e.code !== ESCAPE) return;
+
+      toggleModal();
+    }
+
     window.addEventListener(KEYDOWN, handleClose);
 
     return () => {
       window.removeEventListener(KEYDOWN, handleClose);
     };
-  }, []);
-
-  function handleClose(e) {
-    if (e.code !== ESCAPE) return;
-
-    toggleModal();
-  }
+  }, [toggleModal]);
 
   function handleClickOverlay(e) {
     if (e.target !== e.currentTarget) return;

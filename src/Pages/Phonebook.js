@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
-import { ContactsList } from "./ContactsList";
-import { FilterByName } from "./FilterByName";
-import { SearchForm } from "./SearchForm";
-import { Section } from "../Section";
-import { Title } from "./Title";
+import { ContactsList } from "../components/Phonebook/ContactsList";
+import { FilterByName } from "../components/InputFields";
+import { SearchForm } from "../components/Phonebook/SearchForm";
+import { Section } from "../components/Section";
+import { Title } from "../components/Phonebook/Title";
 // import { initContacts } from "../../assets/contactsData";
-import { CONTACTS_DATA } from "../../constants";
-import storage from "../../helpers/storage";
+import { CONTACTS_DATA } from "../constants";
+import storage from "../helpers/storage";
 
 const Phonebook = () => {
   const [contacts, setContacts] = useState(storage.get(CONTACTS_DATA) || []);
