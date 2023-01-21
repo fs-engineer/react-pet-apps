@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const StyledBtn = styled.button`
-  padding: 10px;
+  padding: ${(props) => props.padding || 10}px;
   border-radius: 5px;
   border: 1px solid blue;
   color: ${({ color }) => color};
