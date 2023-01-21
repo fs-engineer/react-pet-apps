@@ -12,16 +12,23 @@ export default function MovieSearchBar({ onClick }) {
     setSearchParams(value !== "" ? { query: value } : {});
   };
 
+  const submitForm = (e) => {
+    e.preventDefault();
+    onClick();
+  };
+
   return (
     <Section direction={"row"}>
-      <FilterByName onChange={changeSearchParams} filter={query} />
-      <Button
-        type="button"
-        onClick={onClick}
-        text="Search"
-        padding={5}
-        textColor="blue"
-      />
+      <form onSubmit={submitForm}>
+        <FilterByName onChange={changeSearchParams} filter={query} />
+        <Button
+          disabled={!query}
+          type="submit"
+          text="Search"
+          padding={5}
+          textColor="blue"
+        />
+      </form>
     </Section>
   );
 }

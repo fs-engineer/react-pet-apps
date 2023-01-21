@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { MovieSearchBar } from "../components/MoviesCollection/MovieSearchBar";
+import { MoviesList } from "../components/MoviesCollection/MoviesList";
 import * as moviesApi from "../helpers/moviesApi";
 
 export default function MoviesCollection() {
   const [movies, setMovies] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  console.log("movies: ", movies);
+  const [searchParams] = useSearchParams();
 
   const query = searchParams.get("query");
 
@@ -14,12 +14,18 @@ export default function MoviesCollection() {
     moviesApi
       .getMoviesByName(query, 1)
       .then((res) => {
-        setMovies(res);
+        const moviesData = res?.data?.results;
+        setMovies(moviesData);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  return <MovieSearchBar onClick={getMovies} />;
+  return (
+    <>
+      <MovieSearchBar onClick={getMovies} />
+      <MoviesList movies={movies} />
+    </>
+  );
 }
