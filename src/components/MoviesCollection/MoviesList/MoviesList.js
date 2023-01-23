@@ -1,9 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ItemImg, List, ListItem } from "./MoviesList.styled";
+import { makeImgUrl } from "../../../helpers/makeImgUrl";
 
 export default function MoviesList({ movies }) {
   const { pathname } = useLocation();
+
+  const getLinkPath = (id) => {
+    return pathname === "/movies-collection" ? `movies/${id}` : `${id}`;
+  };
 
   return (
     <List>
@@ -12,13 +17,12 @@ export default function MoviesList({ movies }) {
           return (
             <ListItem key={id}>
               <Link
-                to={`${pathname}/${id}`}
+                to={getLinkPath(id)}
+                state={{ from: pathname }}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 {poster_path ? (
-                  <ItemImg
-                    src={`https://image.tmdb.org/t/p/w342${poster_path}`}
-                  />
+                  <ItemImg src={makeImgUrl(poster_path)} />
                 ) : (
                   <p>No images</p>
                 )}

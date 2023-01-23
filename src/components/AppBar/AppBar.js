@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, MenuItem } from "./AppBar.styled";
+import { Menu, MenuItem } from "../Menu/Menu.styled";
 
 const menu = [
   { href: "finder", text: "Image Finder" },

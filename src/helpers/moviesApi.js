@@ -32,10 +32,49 @@ export const getMoviesByName = async (query, page = 1) => {
   };
 
   try {
-    const data = await axios.get(`${movie_url}/search/movie`, {
-      ...initialOptions,
-      ...options,
-    });
+    const data = await axios.get(`${movie_url}/search/movie`, options);
+
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMovieById = async (id) => {
+  const options = {
+    params: {
+      ...initialOptions.params,
+    },
+  };
+
+  try {
+    const data = await axios.get(`${movie_url}/movie/${id}`, options);
+
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getReviewById = async (id) => {
+  try {
+    const data = await axios.get(
+      `${movie_url}/movie/${id}/reviews`,
+      initialOptions
+    );
+
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMovieCastById = async (id) => {
+  try {
+    const data = await axios.get(
+      `${movie_url}/movie/${id}/credits`,
+      initialOptions
+    );
 
     return data;
   } catch (error) {

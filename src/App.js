@@ -2,10 +2,12 @@ import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/Layouts/Layout";
 import { MovieLayout } from "./components/Layouts";
-import { ImageFinder, MoviesTrending } from "./Pages";
+import { ImageFinder, MovieDetails, MoviesTrending } from "./Pages";
 import { VideoPlayer } from "./Pages";
 import { Phonebook } from "./Pages";
 import MoviesCollection from "./Pages/MoviesCollection";
+import { MovieCast } from "./components/MoviesCollection/MovieCast";
+import { MovieReview } from "./components/MoviesCollection/MovieReview";
 
 function App() {
   return (
@@ -22,7 +24,10 @@ function App() {
         <Route path="/movies-collection" element={<MovieLayout />}>
           <Route index element={<MoviesTrending />} />
           <Route path="movies" element={<MoviesCollection />} />
-          <Route path="movies/:movieId" element={<div>id</div>} />
+          <Route path="movies/:movieId" element={<MovieDetails />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReview />} />
+          </Route>
         </Route>
         <Route path="*" element="Error" />
       </Route>
