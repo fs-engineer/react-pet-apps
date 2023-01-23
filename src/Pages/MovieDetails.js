@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import IconButton from "../components/Buttons/IconButton/IconButton";
@@ -23,6 +23,8 @@ export default function MovieDetails() {
   const genresString = genres ? genres.map((el) => el.name).join(", ") : "";
 
   useEffect(() => {
+    if (!movieId) return;
+
     moviesApi
       .getMovieById(movieId)
       .then((res) => {
@@ -58,7 +60,9 @@ export default function MovieDetails() {
           ))}
         </Menu>
       </MovieCard>
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 }
