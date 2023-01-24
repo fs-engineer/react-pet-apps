@@ -2,17 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/Layouts/Layout";
-// import { MovieLayout } from "./components/Layouts";
-// import {
-//   VideoPlayer,
-//   Phonebook,
-//   ImageFinder,
-//   MovieDetails,
-//   MoviesTrending,
-//   MoviesCollection,
-// } from "./Pages";
-// import { MovieCast } from "./components/MoviesCollection/MovieCast";
-// import { MovieReview } from "./components/MoviesCollection/MovieReview";
 const MovieLayout = React.lazy(() =>
   import("./components/Layouts/MovieLayout")
 );
