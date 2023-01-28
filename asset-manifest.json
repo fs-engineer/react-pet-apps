@@ -1,13 +1,41 @@
 {
   "files": {
-    "main.css": "/react-pet-apps/static/css/main.81024002.css",
-    "main.js": "/react-pet-apps/static/js/main.4877e822.js",
+    "main.css": "/react-pet-apps/static/css/main.6a587cf2.css",
+    "main.js": "/react-pet-apps/static/js/main.c39bee60.js",
+    "static/js/72.98016d34.chunk.js": "/react-pet-apps/static/js/72.98016d34.chunk.js",
+    "static/js/570.4e31e7fb.chunk.js": "/react-pet-apps/static/js/570.4e31e7fb.chunk.js",
+    "static/js/770.90e09ff9.chunk.js": "/react-pet-apps/static/js/770.90e09ff9.chunk.js",
+    "static/js/962.1138eae5.chunk.js": "/react-pet-apps/static/js/962.1138eae5.chunk.js",
+    "static/css/227.f82d0965.chunk.css": "/react-pet-apps/static/css/227.f82d0965.chunk.css",
+    "static/js/227.490d3f80.chunk.js": "/react-pet-apps/static/js/227.490d3f80.chunk.js",
+    "static/js/268.aa9643fc.chunk.js": "/react-pet-apps/static/js/268.aa9643fc.chunk.js",
+    "static/js/185.a0226a65.chunk.js": "/react-pet-apps/static/js/185.a0226a65.chunk.js",
+    "static/js/779.5eddd34d.chunk.js": "/react-pet-apps/static/js/779.5eddd34d.chunk.js",
+    "static/js/670.78917e44.chunk.js": "/react-pet-apps/static/js/670.78917e44.chunk.js",
+    "static/js/221.32125b8c.chunk.js": "/react-pet-apps/static/js/221.32125b8c.chunk.js",
+    "static/js/174.82b179ee.chunk.js": "/react-pet-apps/static/js/174.82b179ee.chunk.js",
+    "static/js/978.8c983d54.chunk.js": "/react-pet-apps/static/js/978.8c983d54.chunk.js",
+    "static/js/425.bedd064f.chunk.js": "/react-pet-apps/static/js/425.bedd064f.chunk.js",
     "index.html": "/react-pet-apps/index.html",
-    "main.81024002.css.map": "/react-pet-apps/static/css/main.81024002.css.map",
-    "main.4877e822.js.map": "/react-pet-apps/static/js/main.4877e822.js.map"
+    "main.6a587cf2.css.map": "/react-pet-apps/static/css/main.6a587cf2.css.map",
+    "main.c39bee60.js.map": "/react-pet-apps/static/js/main.c39bee60.js.map",
+    "72.98016d34.chunk.js.map": "/react-pet-apps/static/js/72.98016d34.chunk.js.map",
+    "570.4e31e7fb.chunk.js.map": "/react-pet-apps/static/js/570.4e31e7fb.chunk.js.map",
+    "770.90e09ff9.chunk.js.map": "/react-pet-apps/static/js/770.90e09ff9.chunk.js.map",
+    "962.1138eae5.chunk.js.map": "/react-pet-apps/static/js/962.1138eae5.chunk.js.map",
+    "227.f82d0965.chunk.css.map": "/react-pet-apps/static/css/227.f82d0965.chunk.css.map",
+    "227.490d3f80.chunk.js.map": "/react-pet-apps/static/js/227.490d3f80.chunk.js.map",
+    "268.aa9643fc.chunk.js.map": "/react-pet-apps/static/js/268.aa9643fc.chunk.js.map",
+    "185.a0226a65.chunk.js.map": "/react-pet-apps/static/js/185.a0226a65.chunk.js.map",
+    "779.5eddd34d.chunk.js.map": "/react-pet-apps/static/js/779.5eddd34d.chunk.js.map",
+    "670.78917e44.chunk.js.map": "/react-pet-apps/static/js/670.78917e44.chunk.js.map",
+    "221.32125b8c.chunk.js.map": "/react-pet-apps/static/js/221.32125b8c.chunk.js.map",
+    "174.82b179ee.chunk.js.map": "/react-pet-apps/static/js/174.82b179ee.chunk.js.map",
+    "978.8c983d54.chunk.js.map": "/react-pet-apps/static/js/978.8c983d54.chunk.js.map",
+    "425.bedd064f.chunk.js.map": "/react-pet-apps/static/js/425.bedd064f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.81024002.css",
-    "static/js/main.4877e822.js"
+    "static/css/main.6a587cf2.css",
+    "static/js/main.c39bee60.js"
   ]
 }
