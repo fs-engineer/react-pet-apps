@@ -4,21 +4,22 @@ import { FilterByName } from "../components/InputFields";
 import { SearchForm } from "../components/Phonebook/SearchForm";
 import { Section } from "../components/Section";
 import { Title } from "../components/Phonebook/Title";
-import { useSelector } from "react-redux";
-import { getContacts } from "../redux/phonebook/selectors";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchContacts } from "../redux/phonebook/operations";
 
 const Phonebook = () => {
-  const contacts = useSelector(getContacts);
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get("filter") || "";
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const changeFilter = (value) => {
     setSearchParams(value !== "" ? { filter: value } : {});
   };
-
-  const filteredContactsByName = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
 
   return (
     <>
@@ -26,7 +27,7 @@ const Phonebook = () => {
         <SearchForm />
         <Title title="Contacts" />
         <FilterByName onChange={changeFilter} filter={filter} />
-        <ContactsList filteredContactsByName={filteredContactsByName} />
+        <ContactsList filter={filter} />
       </Section>
     </>
   );
