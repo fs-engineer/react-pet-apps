@@ -1,16 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
-import { selectUserName } from "../../../redux/phonebook/selectors";
+import { useDispatch } from "react-redux";
 import { Button } from "../../Buttons/Button";
 import { Container, Name } from "./UserMenu.styled";
 import { logout } from "../../../redux/phonebook/authOperations";
+import { useAuth } from "../../Hooks/useAuth";
 
 const UserMenu = () => {
-  const userName = useSelector(selectUserName) || "";
+  const { user } = useAuth();
+  console.log(user);
   const dispatch = useDispatch();
 
   return (
     <Container>
-      <Name>{userName}</Name>
+      <Name>{user?.name}</Name>
       <Button text="Logout" padding={5} onClick={() => dispatch(logout())} />
     </Container>
   );
