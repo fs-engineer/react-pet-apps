@@ -1,12 +1,12 @@
 import { useSearchParams } from "react-router-dom";
 import { ContactsList } from "../components/Phonebook/ContactsList";
-import { FilterByName } from "../components/InputFields";
 import { SearchForm } from "../components/Phonebook/SearchForm";
 import { Section } from "../components/Section";
 import { Title } from "../components/Phonebook/Title";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchContacts } from "../redux/phonebook/operations";
+import { FilterByName } from "../components/InputFields";
 
 const Phonebook = () => {
   const [searchParams, setSearchParams] = useSearchParams();

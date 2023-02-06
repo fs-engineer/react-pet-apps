@@ -1,10 +1,10 @@
 import React from "react";
-import { Filter } from "./FilterByName.styled";
+import { Input } from "./Input.styled";
 
-const FilterByName = ({ filter, onChange }) => (
-  <Filter
+const FilterByName = ({ filter, onChange, type = "text" }) => (
+  <Input
     onChange={(e) => onChange(e.target.value)}
-    type="text"
+    type={type}
     name="filter"
     value={filter}
   />

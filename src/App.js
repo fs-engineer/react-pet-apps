@@ -1,10 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layouts/Layout";
+import { ContactsLayout } from "./components/Layouts";
+import { LoginForm } from "./components/Phonebook/LoginRegistration/LoginForm";
+import { RegistrationForm } from "./components/Phonebook/LoginRegistration/RegistrationForm";
 const MovieLayout = React.lazy(() =>
   import("./components/Layouts/MovieLayout")
 );
-const Phonebook = React.lazy(() => import("./Pages/Phonebook"));
 const MoviesTrending = React.lazy(() => import("./Pages/MoviesTrending"));
 const MovieDetails = React.lazy(() => import("./Pages/MovieDetails"));
 const ImageFinder = React.lazy(() => import("./Pages/ImageFinder"));
@@ -22,7 +24,11 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/finder" element={<ImageFinder />} />
-        <Route path="/phonebook" element={<Phonebook />} />
+        {/*<Route path="/phonebook" element={<Phonebook />} />*/}
+        <Route path="/phonebook" element={<ContactsLayout />}>
+          <Route path="login" element={<LoginForm />} />
+          <Route path="registration" element={<RegistrationForm />} />
+        </Route>
         <Route
           path="/videoplayer"
           element={
