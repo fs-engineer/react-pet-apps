@@ -7,6 +7,7 @@ import { RegistrationForm } from "./components/Phonebook/LoginRegistration/Regis
 const MovieLayout = React.lazy(() =>
   import("./components/Layouts/MovieLayout")
 );
+const Phonebook = React.lazy(() => import("./Pages/Phonebook"));
 const MoviesTrending = React.lazy(() => import("./Pages/MoviesTrending"));
 const MovieDetails = React.lazy(() => import("./Pages/MovieDetails"));
 const ImageFinder = React.lazy(() => import("./Pages/ImageFinder"));
@@ -28,6 +29,7 @@ function App() {
         <Route path="/phonebook" element={<ContactsLayout />}>
           <Route path="login" element={<LoginForm />} />
           <Route path="registration" element={<RegistrationForm />} />
+          <Route index element={<Phonebook />} />
         </Route>
         <Route
           path="/videoplayer"

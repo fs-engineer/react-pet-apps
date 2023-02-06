@@ -2,16 +2,13 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosToken } from "../../helpers/axiosToken";
 
-const CONTACTS_API_URL = "https://connections-api.herokuapp.com";
+const URL = process.env.REACT_APP_CONTACTS_API_URL;
 
 export const registration = createAsyncThunk(
   "auth/registration",
   async (userData, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `${CONTACTS_API_URL}/users/signup`,
-        userData
-      );
+      const response = await axios.post(`${URL}/users/signup`, userData);
 
       const token = response?.data?.token;
       axiosToken.set(token);
@@ -27,10 +24,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userData, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `${CONTACTS_API_URL}/users/login`,
-        userData
-      );
+      const response = await axios.post(`${URL}/users/login`, userData);
 
       const token = response?.data?.token;
 
@@ -46,7 +40,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    const response = await axios.post(`${CONTACTS_API_URL}/users/logout`);
+    const response = await axios.post(`${URL}/users/logout`);
 
     axiosToken.unset();
 
@@ -72,7 +66,7 @@ export const fetchCurrentUser = createAsyncThunk(
     axiosToken.set(token);
 
     try {
-      const response = await axios.get(`${CONTACTS_API_URL}/users/current`);
+      const response = await axios.get(`${URL}/users/current`);
 
       return response.data;
     } catch (e) {
