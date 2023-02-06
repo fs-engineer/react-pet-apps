@@ -56,11 +56,8 @@ export const fetchCurrentUser = createAsyncThunk(
     const state = thunkAPI.getState();
     const token = state.auth.token;
 
-    console.log("Auth token ", token);
-
     if (!token) {
       return thunkAPI.rejectWithValue("No token");
-      // return state;
     }
 
     axiosToken.set(token);

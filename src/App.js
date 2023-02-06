@@ -4,6 +4,9 @@ import Layout from "./components/Layouts/Layout";
 import { ContactsLayout } from "./components/Layouts";
 import { LoginForm } from "./components/Phonebook/LoginRegistration/LoginForm";
 import { RegistrationForm } from "./components/Phonebook/LoginRegistration/RegistrationForm";
+import { RestrictedRoute } from "./redux/routes";
+import { finderPath, phonebookPath, videoPlayerPath } from "./constants";
+import { PrivateRoute } from "./redux/routes/PrivateRoute";
 const MovieLayout = React.lazy(() =>
   import("./components/Layouts/MovieLayout")
 );
@@ -24,15 +27,33 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/finder" element={<ImageFinder />} />
-        {/*<Route path="/phonebook" element={<Phonebook />} />*/}
-        <Route path="/phonebook" element={<ContactsLayout />}>
-          <Route path="login" element={<LoginForm />} />
-          <Route path="registration" element={<RegistrationForm />} />
-          <Route index element={<Phonebook />} />
+        <Route path={finderPath} element={<ImageFinder />} />
+        <Route path={phonebookPath} element={<ContactsLayout />}>
+          <Route
+            path="login"
+            element={
+              <RestrictedRoute
+                component={LoginForm}
+                redirectTo={phonebookPath}
+              />
+            }
+          />
+          <Route
+            path="registration"
+            element={
+              <RestrictedRoute
+                component={RegistrationForm}
+                redirectTo={phonebookPath}
+              />
+            }
+          />
+          <Route
+            index
+            element={<PrivateRoute component={Phonebook} redirectTo="login" />}
+          />
         </Route>
         <Route
-          path="/videoplayer"
+          path={videoPlayerPath}
           element={
             <VideoPlayer source="http://media.w3.org/2010/05/sintel/trailer.mp4" />
           }

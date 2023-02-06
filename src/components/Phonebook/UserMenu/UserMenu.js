@@ -2,11 +2,10 @@ import { useDispatch } from "react-redux";
 import { Button } from "../../Buttons/Button";
 import { Container, Name } from "./UserMenu.styled";
 import { logout } from "../../../redux/phonebook/authOperations";
-import { useAuth } from "../../Hooks/useAuth";
+import { useAuth } from "../../../hooks";
 
 const UserMenu = () => {
-  const { user } = useAuth();
-  console.log(user);
+  const { user } = useAuth() || null;
   const dispatch = useDispatch();
 
   return (

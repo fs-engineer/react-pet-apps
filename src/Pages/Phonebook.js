@@ -5,7 +5,7 @@ import { Section } from "../components/Section";
 import { Title } from "../components/Phonebook/Title";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchContacts } from "../redux/phonebook/operations";
+import { fetchContacts } from "../redux/phonebook/contactsOperations";
 import { FilterByName } from "../components/InputFields";
 
 const Phonebook = () => {

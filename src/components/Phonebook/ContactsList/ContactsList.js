@@ -1,17 +1,13 @@
 import { Button } from "../../Buttons/Button";
 import { List, ListItem, ItemText } from "./ContactsList.styled";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteContact } from "../../../redux/phonebook/operations";
-import {
-  selectContacts,
-  selectIsLoading,
-} from "../../../redux/phonebook/selectors";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../../redux/phonebook/contactsOperations";
 import { LoadingSpinner } from "../../LoadingSpinner";
+import { useContact } from "../../../hooks";
 
 const ContactsList = ({ filter }) => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
+  const { contacts, isLoading } = useContact();
 
   const filteredContactsByName = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLowerCase())

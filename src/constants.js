@@ -6,3 +6,7 @@ export const KEYDOWN = "keydown";
 export const PER_PAGE = 15;
 export const PHOTO = "photo";
 export const HORIZONTAL = "horizontal";
+
+export const phonebookPath = "/phonebook";
+export const finderPath = "/finder";
+export const videoPlayerPath = "/videoplayer";

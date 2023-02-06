@@ -3,15 +3,15 @@ import { Form, NameInput, PhoneInput } from "./SearchForm.styled";
 import { Button } from "../../Buttons/Button";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
-import { useDispatch, useSelector } from "react-redux";
-import { selectContacts } from "../../../redux/phonebook/selectors";
-import { addContact } from "../../../redux/phonebook/operations";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../../redux/phonebook/contactsOperations";
+import { useContact } from "../../../hooks";
 
 const SearchForm = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
-  const contacts = useSelector(selectContacts);
+  const { contacts } = useContact();
   const dispatch = useDispatch();
 
   const handleFormSubmit = (e) => {

@@ -1,8 +1,7 @@
 import { Container, MenuLink, Nav } from "./NavMenu.styled";
 import { Outlet } from "react-router-dom";
 import { UserMenu } from "../UserMenu";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../../redux/phonebook/selectors";
+import { useAuth } from "../../../hooks";
 
 const menu = [
   { text: "sign in", href: "login" },
@@ -10,12 +9,12 @@ const menu = [
 ];
 
 const NavMenu = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const { isLoggedIn, isRefreshing } = useAuth();
 
   return (
     <>
       <Container>
-        {!isLoggedIn ? (
+        {!isLoggedIn && !isRefreshing ? (
           <Nav>
             {menu.map(({ text, href }) => (
               <MenuLink
@@ -28,7 +27,7 @@ const NavMenu = () => {
             ))}
           </Nav>
         ) : null}
-        {isLoggedIn ? <UserMenu /> : null}
+        {isLoggedIn && !isRefreshing ? <UserMenu /> : null}
       </Container>
       <Outlet />
     </>

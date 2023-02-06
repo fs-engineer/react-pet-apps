@@ -12,6 +12,7 @@ const initialState = {
   user: { name: null, email: null },
   isLoggedIn: false,
   token: null,
+  isRefreshing: false,
 };
 
 const persistConfig = {
@@ -38,10 +39,15 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state, _) => {
         state.user = initialState.user;
         state.isLoggedIn = false;
+        state.token = null;
+      })
+      .addCase(fetchCurrentUser.pending, (state, _) => {
+        state.isRefreshing = true;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, { payload }) => {
         state.user = payload;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
       }),
 });
 
